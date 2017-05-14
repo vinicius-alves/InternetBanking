@@ -8,7 +8,7 @@ class RequestManager ():
 
     def getHelpRequest ():
         if (self.help_request==None):
-        	raise NameError
+            raise NameError
         return self.help_request
 
     def getTransactionManager ():

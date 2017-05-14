@@ -119,7 +119,7 @@ def transfer(request):
 
 @api_view(['POST'])
 @authentication_classes((TokenAuthentication,))
-@permission_classes((VipOnly,))
+@permission_classes((AllowAll,))
 def help(request):
     data ={}
     if settings.DEBUG:

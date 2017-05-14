@@ -8,7 +8,7 @@ class Account_History ():
 
     def getAccount ():
         if (self.account==None):
-        	raise NameError
+            raise NameError
         return self.account
 
     def getTransactionManager ():

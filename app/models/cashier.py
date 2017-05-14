@@ -7,7 +7,7 @@ class Cashier ():
 
     def getAccount ():
         if (self.account==None):
-        	raise NameError
+            raise NameError
         return account
 
     def setAccount (account):

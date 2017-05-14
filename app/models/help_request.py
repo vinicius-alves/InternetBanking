@@ -11,37 +11,37 @@ class HelpRequest ():
 
     def getId ():
         if (self.id==None):
-        	raise NameError
+            raise NameError
         return self.id
 
     def getType ():
         if (self.type==None):
-        	raise NameError
+            raise NameError
         return self.type
 
     def getSolved ():
         if (self.solved==None):
-        	raise NameError
+            raise NameError
         return self.solved
 
     def getStart ():
         if (self.start==None):
-        	raise NameError
+            raise NameError
         return self.start
 
     def getUser ():
         if (user==None):
-        	raise NameError
+            raise NameError
         return user
 
     def setId (id):
         if (id<=0 or type(balance) is not 'int'):
-        	raise ValueError
+            raise ValueError
         self.id = id
 
     def setType (type):
-        if (type<=0 or type(balance) is not 'int'):    	
-        	raise ValueError
+        if (type<=0 or type(type) is not 'int'):
+            raise ValueError
         self.type = type 
 
     def setValue (solved):
@@ -63,7 +63,7 @@ class HelpRequest ():
     def update ():
         raise NotImplementedError  
 
-    def save ():
+    def create ():
         raise NotImplementedError      
 
     class Meta:

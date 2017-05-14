@@ -11,37 +11,37 @@ class Transaction ():
 
     def getId ():
         if (self.id==None):
-        	raise NameError
+            raise NameError
         return self.id
 
     def getType ():
         if (self.type==None):
-        	raise NameError
+            raise NameError
         return self.type
 
     def getValue ():
         if (self.value==None):
-        	raise NameError
+            raise NameError
         return self.value
 
     def getTime ():
         if (self.time==None):
-        	raise NameError
+            raise NameError
         return self.time
 
     def getAccount ():
         if (self.account==None):
-        	raise NameError
+            raise NameError
         return account
 
     def setId (id):
         if (id<=0 or type(balance) is not 'int'):
-        	raise ValueError
+            raise ValueError
         self.id = id
 
     def setType (type):
-        if (type<=0 or type(balance) is not 'int'):    	
-        	raise ValueError
+        if (type<=0 or type(type) is not 'int'):
+            raise ValueError
         self.type = type 
 
     def setValue (value):
@@ -63,7 +63,7 @@ class Transaction ():
     def update ():
         raise NotImplementedError  
 
-    def save ():
+    def create ():
         raise NotImplementedError      
 
     class Meta:
