@@ -50,7 +50,7 @@ As seguintes tecnologias são necessárias para o bom funcionamento do sistema:
 
 Todas as outras dependências e bibliotecas externas já estão acopladas nesse repositório e não necessitam de maior atenção do usuário. O sistema de base de dados utilizado foi o `sqlite3` fornecido pelo próprio Django.
 
-#### Inicializando o ambiente
+### Inicializando o ambiente
 
 - Faça download ou clone o repositório para um diretório dentro de sua preferência.
 - Utillizando o terminal, navegue até o diretório que você extraiu o repositório e digite o seguinte comando:
