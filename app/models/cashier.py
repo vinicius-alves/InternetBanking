@@ -1,5 +1,5 @@
 from django.db import models
-from app.models import Account
+from app.models.data_models import Account
 
 class Cashier ():
 

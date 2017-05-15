@@ -4,10 +4,43 @@ from app.models.data_models import Account, Transaction_Type
 class Transaction (models.Model):
 
     id      = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
-    time    = models.DateField()
-    value   = models.IntegerField()
+    time    = models.DateField(auto_now_add=True)
+    value   = models.IntegerField(default=0)
     type    = models.ForeignKey(Transaction_Type)
     account = models.ForeignKey(Account,on_delete=models.CASCADE)
+
+    def getId (self):
+        return self.id
+
+    def getType (self):
+        return self.type
+
+    def getValue (self):
+        return self.value
+
+    def getTime (self):
+        return self.time
+
+    def getAccount (self):
+        return self.account
+
+    def setId (self,id):
+        self.id = id
+
+    def setType (self,type):
+        self.type = type 
+
+    def setValue (self,value):
+        self.value = value   
+
+    def setTime (self,time):
+        self.time = time 
+
+    def setAccount (self,account):
+        self.account = account  
+
+    def update (self):
+        self.save()
 
     def __str__(self):
 

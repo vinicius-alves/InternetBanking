@@ -5,13 +5,20 @@ class Transaction_Type(models.Model):
     id = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
     
     # Transaction Types:
+    type1 = "Saque"
+    type2 = "Depósito"
+    type3 = "Pagamento de Extrato"
+    type4 = "Juros sobre saldo negativo"
+    type5 = "Transferência bancária"
+    type6 = "Pagamento de taxa de transferência bancária"
+    type7 = "Solicitação de visita do gerente"
+
     Transaction_Types = (
-        ('Type1', 'Type1'),
-        ('Type2', 'Type2'),
-        ('Type3', 'Type3'),
+        (type1, type1), (type2, type2), (type3, type3), (type4, type4),
+        (type5, type5), (type6, type6), (type7, type7)
     )
     name = models.CharField(
-        max_length = 30,
+        max_length = 50,
         choices = Transaction_Types
     )
 

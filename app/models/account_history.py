@@ -1,5 +1,6 @@
 from django.db import models
-from app.models import Account, TransactionManager
+from app.models.data_models import Account
+from app.models import TransactionManager
 
 class Account_History ():
 

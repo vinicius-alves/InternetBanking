@@ -1,5 +1,6 @@
 from django.db import models
-from app.models import HelpRequest, TransactionManager
+from app.models.data_models import Help_Request
+from app.models import TransactionManager
 
 class RequestManager ():
 

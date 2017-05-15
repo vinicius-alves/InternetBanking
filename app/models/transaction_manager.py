@@ -1,5 +1,6 @@
 from django.db import models
-from app.models import Transaction, Cashier
+from app.models.data_models import Transaction
+from app.models import Cashier
 
 class TransactionManager ():
 
