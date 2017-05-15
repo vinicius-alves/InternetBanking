@@ -49,7 +49,7 @@ def balance(request):
         print ("{\"user:\"\"",str(request.user),"\"}")
     try:
         account = Account.objects.get(user=request.user)
-        data = {"status":"sucesso", "balance":account.balance}
+        data = {"status":"sucesso", "balance":account.getBalance()}
         return Response(data,status=status.HTTP_200_OK)
     except:
         data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}

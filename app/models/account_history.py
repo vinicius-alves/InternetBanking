@@ -8,8 +8,7 @@ class AccountHistory ():
     transaction_manager = TransactionManager()
 
     def __init__(self, account): 
-        self.account = account
-        #self.setAccount(account)
+        self.setAccount(account)
 
     def getAccount (self):
         if (self.account==None):

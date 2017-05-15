@@ -4,7 +4,9 @@ from app.models import TransactionManager
 class TransactionVip (TransactionManager):
 
     def withdraw (self):
-        raise NotImplementedError
+        value = self.transaction.getValue()
+        self.cashier.decrease(amount=value,max=1000)
+        self.cashier.save()
 
     def deposit (self):
         raise NotImplementedError
