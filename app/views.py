@@ -1,13 +1,15 @@
-import sys
 import json
+import sys
 from django.shortcuts import render
 from django.conf import settings
-from app.models import *
+from django.core.serializers import serialize
+from django.utils.safestring import mark_safe
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import TokenAuthentication
+from app.models import *
 from app.permissions import AllowAll,VipOnly
 
 #static pages
@@ -46,7 +48,9 @@ def balance(request):
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
         print ("{\"user:\"\"",str(request.user),"\"}")
     try:
-        raise NotImplementedError
+        account = Account.objects.get(user=request.user)
+        data = {"status":"sucesso", "balance":account.balance}
+        return Response(data,status=status.HTTP_200_OK)
     except:
         data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
@@ -62,7 +66,12 @@ def excerpt(request):
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
         print ("{\"user:\"\"",str(request.user),"\"}")
     try:
-        raise NotImplementedError
+        account = Account.objects.get(user=request.user)
+        account_history = AccountHistory(account)
+        transactions = account_history.getExcerpt()
+        data = {"status":"sucesso"}
+        data["transactions"] = [transaction.as_json() for transaction in transactions]
+        return Response(data,status=status.HTTP_200_OK)
     except:
         data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
@@ -74,10 +83,30 @@ def excerpt(request):
 @permission_classes((AllowAll,))
 def withdraw(request):
     data ={}
+    groups_manager = SettingsUserGroups()
+    transaction = Transaction()
+    transaction_manager = TransactionManager()
     if settings.DEBUG:
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
         print ("{\"user:\"\"",str(request.user),"\"}")
     try:
+        json_in=json.loads(request.body.decode("utf-8"))
+        account = Account.objects.get(user=request.user)
+        type = Transaction_Type.objects.get(id=1)  
+        transaction.setType(type)
+        transaction.setValue(json_in["value"])
+        transaction.setAccount(account)
+
+        if(groups_manager.isPublic(request.user)):
+            transaction_manager = TransactionPublic()
+
+        elif(groups_manager.isVip(request.user)):
+            transaction_manager = TransactionVip()  
+            
+        transaction_manager.setTransaction(transaction)
+        transaction_manager.withdraw()   
+        transaction_manager.save()  
+          
         raise NotImplementedError
     except:
         data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}

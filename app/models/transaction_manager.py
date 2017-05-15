@@ -4,36 +4,37 @@ from app.models import Cashier
 
 class TransactionManager ():
 
-    cashier     =  Cashier()
-    transaction =  Transaction()
+    transaction = Transaction()
+    cashier     = Cashier()
 
-    def getTransaction ():
+    def getTransaction (self):
         if (self.transaction==None):
             raise NameError
         return self.transaction
 
-    def setTransaction (transaction):
+    def setTransaction (self, transaction):
         self.transaction = transaction
+        self.cashier.setAccount(transaction.getAccount())
 
-    def withdraw ():
+    def withdraw (self):
         raise NotImplementedError
 
-    def deposit ():
+    def deposit (self):
         raise NotImplementedError
 
-    def doTransfer ():
+    def doTransfer (self):
         raise NotImplementedError
 
-    def receiveTransfer ():
+    def receiveTransfer (self):
         raise NotImplementedError
 
-    def payExcerpt ():
+    def payExcerpt (self):
         raise NotImplementedError
 
-    def payHelp ():
+    def payHelp (self):
         raise NotImplementedError
 
-    def save ():
+    def save (self):
         self.transaction.save()
 
     class Meta:

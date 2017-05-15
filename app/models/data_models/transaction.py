@@ -42,6 +42,16 @@ class Transaction (models.Model):
     def update (self):
         self.save()
 
+    def as_json(self):
+
+        json_dict = {}
+        json_dict["id"]    = self.id
+        json_dict["time"]  = self.time.isoformat()
+        json_dict["value"] = self.value
+        json_dict["type"]  = self.type.name
+
+        return json_dict
+
     def __str__(self):
 
         return str(self.account.id) + ' - '+ str(self.time)+ ' - '+ str(self.value)

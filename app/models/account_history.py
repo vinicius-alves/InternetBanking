@@ -1,30 +1,35 @@
 from django.db import models
-from app.models.data_models import Account
+from app.models.data_models import Account, Transaction
 from app.models import TransactionManager
 
-class Account_History ():
+class AccountHistory ():
 
     account             = Account()
     transaction_manager = TransactionManager()
 
-    def getAccount ():
+    def __init__(self, account): 
+        self.account = account
+        #self.setAccount(account)
+
+    def getAccount (self):
         if (self.account==None):
             raise NameError
         return self.account
 
-    def getTransactionManager ():
+    def getTransactionManager (self):
         if (self.transaction_manager==None):
             raise NameError
         return self.transaction_manager
 
-    def setAccount (account):
+    def setAccount (self, account):
         self.account = account 	
 
-    def setTransactionManager (transaction_manager):
+    def setTransactionManager (self, transaction_manager):
         self.transaction_manager = transaction_manager
 
-    def getExcerpt ():
-        raise NotImplementedError
+    def getExcerpt (self):
+        transactions = list(Transaction.objects.filter(account=self.account))
+        return transactions
 
     class Meta:
         managed   = False

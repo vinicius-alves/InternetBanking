@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Account (models.Model):
 
     id          = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
-    balance     = models.IntegerField()
+    balance     = models.IntegerField(default=0)
     owing       = models.BooleanField(default=False)
     owing_since = models.DateField(blank=True)
     user        = models.OneToOneField(User,on_delete=models.CASCADE)

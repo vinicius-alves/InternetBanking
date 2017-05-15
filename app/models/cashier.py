@@ -5,19 +5,30 @@ class Cashier ():
 
     account = Account()
 
-    def getAccount ():
+    def getAccount (self):
         if (self.account==None):
             raise NameError
-        return account
+        return self.account
 
-    def setAccount (account):
+    def setAccount (self, account):
         self.account = account 	
 
-    def increase ():
-        raise NotImplementedError
+    def increase (self, amount, max=0):
+        if(amount<=0):
+            raise NameError
+        elif(amount > max):
+            raise Exception("Not Allowed")
+        self.account.balance += amount
 
-    def decrease ():
-        raise NotImplementedError    
+    def decrease (self, amount, max=0):
+        if(amount<=0):
+            raise NameError
+        elif(amount > max):
+            raise Exception("Not Allowed")
+        self.account.balance -= amount 
+
+    def save(self):
+        self.account.save()  
 
     class Meta:
         managed   = False

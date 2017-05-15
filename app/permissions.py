@@ -18,7 +18,7 @@ class VipOnly(BasePermission):
 	def has_permission(self, request, view):
 
 		if  request.user and is_authenticated(request.user):
-			return request.user.groups.filter(pk=settingsUserGroups.VipGroup).exists()
+			return settingsUserGroups.isVip(request.user)
 		else:
 			return False
 

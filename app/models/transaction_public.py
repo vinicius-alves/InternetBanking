@@ -3,22 +3,24 @@ from app.models import TransactionManager
 
 class TransactionPublic (TransactionManager):
 
-    def withdraw ():
+    def withdraw (self):
+        value = self.transaction.getValue()
+        self.cashier.decrease(amount=value,max=1000)
+        self.cashier.save()
+
+    def deposit (self):
         raise NotImplementedError
 
-    def deposit ():
+    def doTransfer (self):
         raise NotImplementedError
 
-    def doTransfer ():
+    def receiveTransfer (self):
         raise NotImplementedError
 
-    def receiveTransfer ():
+    def payExcerpt (self):
         raise NotImplementedError
 
-    def payExcerpt ():
-        raise NotImplementedError
-
-    def payHelp ():
+    def payHelp (self):
         raise NotImplementedError
 
     class Meta:

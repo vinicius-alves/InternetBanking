@@ -7,23 +7,23 @@ class RequestManager ():
     help_request        = HelpRequest()
     transaction_manager = TransactionManager()
 
-    def getHelpRequest ():
+    def getHelpRequest (self):
         if (self.help_request==None):
             raise NameError
         return self.help_request
 
-    def getTransactionManager ():
+    def getTransactionManager (self):
         if (self.transaction_manager==None):
             raise NameError
         return self.transaction_manager
 
-    def setAccount (help_request):
+    def setAccount (self, help_request):
         self.help_request = help_request 	
 
-    def setTransactionManager (transaction_manager):
+    def setTransactionManager (self, transaction_manager):
         self.transaction_manager = transaction_manager
 
-    def save ():
+    def save (self):
         raise NotImplementedError
 
     class Meta:
