@@ -8,37 +8,37 @@ class Help_Request (models.Model):
     start  = models.DateField(auto_now_add=True)
     user   = models.OneToOneField(User,on_delete=models.CASCADE)
 
-    def getId ():
+    def getId (self):
         return self.id
 
-    def getType ():
+    def getType (self):
         return self.type
 
-    def getSolved ():
+    def getSolved (self):
         return self.solved
 
-    def getStart ():
+    def getStart (self):
         return self.start
 
-    def getUser ():
-        return user
+    def getUser (self):
+        return self.user
 
-    def setId (id):
+    def setId (self,id):
         self.id = id
 
-    def setType (type):
+    def setType (self,type):
         self.type = type 
 
-    def setValue (solved):
+    def setValue (self,solved):
         self.solved = solved   
 
-    def setStart (start):
+    def setStart (self,start):
         self.start = start 
 
-    def setUser (user):
+    def setUser (self,user):
         self.user = user 
 
-    def update ():
+    def update (self):
         self.save()
 
     def __str__(self):

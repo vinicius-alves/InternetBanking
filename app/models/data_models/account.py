@@ -4,9 +4,8 @@ from django.contrib.auth.models import User
 class Account (models.Model):
 
     id          = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
-    balance     = models.IntegerField(default=0)
-    owing       = models.BooleanField(default=False)
-    owing_since = models.DateField(blank=True)
+    balance     = models.FloatField(default=0)
+    owing_since = models.DateTimeField(null=True, blank=True)
     user        = models.OneToOneField(User,on_delete=models.CASCADE)
 
     def getId (self):
@@ -16,7 +15,8 @@ class Account (models.Model):
         return self.balance
 
     def getOwing (self):
-        return self.owing
+        owing = self.balance<0
+        return owing
 
     def getOwingSince (self):
         return self.owing_since
@@ -29,9 +29,6 @@ class Account (models.Model):
 
     def setBalance (self,balance):
         self.balance = balance
-
-    def setOwing (self,owing):
-        self.owing = owing
 
     def setOwingSince (self,owing_since):
         self.owing_since = owing_since

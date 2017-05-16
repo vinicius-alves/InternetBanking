@@ -1,6 +1,8 @@
 from django.db import models
 from app.models.data_models import Account
 from datetime import datetime
+from pytz import timezone
+from math import pow
 
 class Cashier ():
 
@@ -19,31 +21,46 @@ class Cashier ():
             raise NameError
         elif(amount > max):
             raise Exception("Not Allowed")
-        self.account.balance += amount
+        balance = self.account.getBalance() 
+        self.account.setBalance(balance+amount)
 
     def decrease (self, amount, max=2147483647):
         if(amount<=0):
             raise NameError
         elif(amount > max):
             raise Exception("Not Allowed")
-        self.account.balance -= amount 
+        balance = self.account.getBalance() 
+        self.account.setBalance(balance-amount)
 
     def save(self):
         self.account.save() 
 
     def updateDebits(self):
-        if(self.account.balance>=0):
-            return False
+        debits = 0
+        owing = self.account.getOwing()
+        if(not(owing)):
+            return debits
+
+        minutes_owing = self.minutesOwing()
+        if(minutes_owing==0):
+            return debits
+
+        balance = self.account.getBalance()
+        interest_rate = pow(1.001,minutes_owing) 
+        debits = abs(balance)*(interest_rate-1)
+        self.decrease(debits)  
         
+        return debits
 
-        raise NotImplementedError
 
+    def minutesOwing(self):
+        time_since = self.account.getOwingSince()
+        if(time_since== None):
+            return 0
+        time_now   = datetime.now(timezone('America/Sao_Paulo'))
 
-    def differenceMinutes(self):
-        time_since = self.account.getTime()
-        time_now   = datetime.now()
-
-        minutes = (time_now - time_since).minutes
+        time_delta_difference = time_now - time_since
+        minutes = (time_delta_difference.seconds//60)%60
 
         if(minutes<0):
             raise NameError

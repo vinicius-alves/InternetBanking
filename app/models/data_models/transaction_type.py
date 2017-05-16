@@ -12,10 +12,11 @@ class Transaction_Type(models.Model):
     type5 = "Transferência bancária"
     type6 = "Pagamento de taxa de transferência bancária"
     type7 = "Solicitação de visita do gerente"
+    type8 = "Recebimento de transferência bancária"
 
     Transaction_Types = (
         (type1, type1), (type2, type2), (type3, type3), (type4, type4),
-        (type5, type5), (type6, type6), (type7, type7)
+        (type5, type5), (type6, type6), (type7, type7), (type8, type8)
     )
     name = models.CharField(
         max_length = 50,

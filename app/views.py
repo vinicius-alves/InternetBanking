@@ -10,6 +10,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import TokenAuthentication
 from app.models import *
+from django.contrib.auth.models import User
 from app.permissions import AllowAll,VipOnly
 
 #static pages
@@ -94,7 +95,7 @@ def withdraw(request):
         account = Account.objects.get(user=request.user)
         type = Transaction_Type.objects.get(id=1)  
         transaction.setType(type)
-        transaction.setValue(json_in["value"])
+        transaction.setValue(abs(int(json_in["value"])))
         transaction.setAccount(account)
 
         if(groups_manager.isPublic(request.user)):
@@ -105,9 +106,11 @@ def withdraw(request):
             
         transaction_manager.setTransaction(transaction)
         transaction_manager.withdraw()   
-        transaction_manager.save()  
+        transaction_manager.save() 
+
+        data = {"status":"sucesso"}
+        return Response(data,status=status.HTTP_200_OK) 
           
-        raise NotImplementedError
     except:
         data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
@@ -119,11 +122,33 @@ def withdraw(request):
 @permission_classes((AllowAll,))
 def deposit(request):
     data ={}
+    groups_manager = SettingsUserGroups()
+    transaction = Transaction()
+    transaction_manager = TransactionManager()
     if settings.DEBUG:
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
         print ("{\"user:\"\"",str(request.user),"\"}")
     try:
-        raise NotImplementedError
+        json_in=json.loads(request.body.decode("utf-8"))
+        account = Account.objects.get(user=request.user)
+        type = Transaction_Type.objects.get(id=2)  
+        transaction.setType(type)
+        transaction.setValue(abs(int(json_in["value"])))
+        transaction.setAccount(account)
+
+        if(groups_manager.isPublic(request.user)):
+            transaction_manager = TransactionPublic()
+
+        elif(groups_manager.isVip(request.user)):
+            transaction_manager = TransactionVip()  
+            
+        transaction_manager.setTransaction(transaction)
+        transaction_manager.deposit()   
+        transaction_manager.save() 
+
+        data = {"status":"sucesso"}
+        return Response(data,status=status.HTTP_200_OK) 
+          
     except:
         data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
@@ -135,11 +160,58 @@ def deposit(request):
 @permission_classes((AllowAll,))
 def transfer(request):
     data ={}
+    groups_manager = SettingsUserGroups()
+    first_transaction = Transaction()
+    second_transaction = Transaction()
+    transaction_manager = TransactionManager()
     if settings.DEBUG:
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
         print ("{\"user:\"\"",str(request.user),"\"}")
     try:
-        raise NotImplementedError
+        json_in=json.loads(request.body.decode("utf-8"))
+        receiver = User.objects.get(id=json_in["receiver"])
+        if(request.user==receiver):
+            raise NameError
+        account = Account.objects.get(user=request.user)
+        receiver_account = Account.objects.get(user=receiver)
+
+        #first transaction
+        type = Transaction_Type.objects.get(id=5)  
+        first_transaction.setType(type)
+        first_transaction.setValue(abs(int(json_in["value"])))
+        first_transaction.setAccount(account)
+
+        if(groups_manager.isPublic(request.user)):
+            transaction_manager = TransactionPublic()
+
+        elif(groups_manager.isVip(request.user)):
+            transaction_manager = TransactionVip()  
+            
+        transaction_manager.setTransaction(first_transaction)
+        transaction_manager.doTransfer()   
+        transaction_manager.save()
+
+        #second transaction
+        type = Transaction_Type.objects.get(id=8)  
+        second_transaction.setType(type)
+        second_transaction.setValue(abs(int(json_in["value"])))
+        second_transaction.setAccount(receiver_account)
+
+        if(groups_manager.isPublic(receiver)):
+            transaction_manager = TransactionPublic()
+
+        elif(groups_manager.isVip(receiver)):
+            transaction_manager = TransactionVip()
+   
+        transaction_manager.setTransaction(second_transaction)
+        transaction_manager.receiveTransfer()   
+        transaction_manager.save()
+
+        raise NotImplementedError 
+
+        data = {"status":"sucesso"}
+        return Response(data,status=status.HTTP_200_OK) 
+          
     except:
         data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
@@ -151,11 +223,34 @@ def transfer(request):
 @permission_classes((VipOnly,))
 def help(request):
     data ={}
+    transaction = Transaction()
+    transaction_manager = TransactionManager()
+    request_manager = RequestManager()
     if settings.DEBUG:
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
         print ("{\"user:\"\"",str(request.user),"\"}")
     try:
-        raise NotImplementedError
+        account = Account.objects.get(user=request.user)
+        type = Transaction_Type.objects.get(id=7)  
+        transaction.setType(type)
+        transaction.setAccount(account)
+
+        if(groups_manager.isPublic(request.user)):
+            transaction_manager = TransactionPublic()
+
+        elif(groups_manager.isVip(request.user)):
+            transaction_manager = TransactionVip() 
+
+        transaction_manager.setTransaction(transaction)            
+        request_manager.setTransactionManager(transaction_manager)    
+        transaction_manager.payHelp()   
+        transaction_manager.save()
+        
+        raise NotImplementedError 
+
+        data = {"status":"sucesso"}
+        return Response(data,status=status.HTTP_200_OK) 
+          
     except:
         data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)

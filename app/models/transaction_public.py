@@ -9,13 +9,20 @@ class TransactionPublic (TransactionManager):
         self.cashier.save()
 
     def deposit (self):
-        raise NotImplementedError
+        value = self.transaction.getValue()
+        self.cashier.increase(amount=value)
+        self.cashier.save()
 
     def doTransfer (self):
-        raise NotImplementedError
+        value = self.transaction.getValue()
+        self.cashier.decrease(amount=value)
+        self.cashier.save()
 
     def receiveTransfer (self):
+        value = self.transaction.getValue()
+        self.cashier.increase(amount=value)
         raise NotImplementedError
+        self.cashier.save()
 
     def payExcerpt (self):
         raise NotImplementedError
