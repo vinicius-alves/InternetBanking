@@ -2,8 +2,6 @@ import json
 import sys
 from django.shortcuts import render
 from django.conf import settings
-from django.core.serializers import serialize
-from django.utils.safestring import mark_safe
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -34,8 +32,8 @@ def logout(request):
         Token.objects.create(user=request.user)
         data = {"status":"sucesso"}
         return Response(data,status=status.HTTP_202_ACCEPTED)
-    except:
-        data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
+    except Exception as exception:
+        data = {"error":str(exception)}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
     finally:
         if settings.DEBUG: print ("Output: ",data)
@@ -52,8 +50,8 @@ def balance(request):
         account = Account.objects.get(user=request.user)
         data = {"status":"sucesso", "balance":account.getBalance()}
         return Response(data,status=status.HTTP_200_OK)
-    except:
-        data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
+    except Exception as exception:
+        data = {"error":str(exception)}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
     finally:
         if settings.DEBUG: print ("Output: ",data)
@@ -73,8 +71,8 @@ def excerpt(request):
         data = {"status":"sucesso"}
         data["transactions"] = [transaction.as_json() for transaction in transactions]
         return Response(data,status=status.HTTP_200_OK)
-    except:
-        data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
+    except Exception as exception:
+        data = {"error":str(exception)}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
     finally:
         if settings.DEBUG: print ("Output: ",data)
@@ -111,8 +109,8 @@ def withdraw(request):
         data = {"status":"sucesso"}
         return Response(data,status=status.HTTP_200_OK) 
           
-    except:
-        data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
+    except Exception as exception:
+        data = {"error":str(exception)}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
     finally:
         if settings.DEBUG: print ("Output: ",data)
@@ -149,8 +147,8 @@ def deposit(request):
         data = {"status":"sucesso"}
         return Response(data,status=status.HTTP_200_OK) 
           
-    except:
-        data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
+    except Exception as exception:
+        data = {"error":str(exception)}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
     finally:
         if settings.DEBUG: print ("Output: ",data)
@@ -171,7 +169,7 @@ def transfer(request):
         json_in=json.loads(request.body.decode("utf-8"))
         receiver = User.objects.get(id=json_in["receiver"])
         if(request.user==receiver):
-            raise NameError
+            raise Exception("Não é permitido fazer uma transferência para a própria conta")
         account = Account.objects.get(user=request.user)
         receiver_account = Account.objects.get(user=receiver)
 
@@ -210,8 +208,8 @@ def transfer(request):
         data = {"status":"sucesso"}
         return Response(data,status=status.HTTP_200_OK) 
           
-    except:
-        data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
+    except Exception as exception:
+        data = {"error":str(exception)}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
     finally:
         if settings.DEBUG: print ("Output: ",data)
@@ -248,8 +246,8 @@ def help(request):
         data = {"status":"sucesso"}
         return Response(data,status=status.HTTP_200_OK) 
           
-    except:
-        data = {"non_field_errors":["Unexpected error:" + str(sys.exc_info()[0])]}
+    except Exception as exception:
+        data = {"error":str(exception)}
         return Response(data,status=status.HTTP_400_BAD_REQUEST,exception=True)
     finally:
         if settings.DEBUG: print ("Output: ",data)

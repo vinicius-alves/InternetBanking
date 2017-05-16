@@ -1,0 +1,121 @@
+<h3>Bem-vindo!<h3>
+
+<h4>Saldo - R$ {{balance}}</h4>
+
+<div ng-if="balance_message">
+	{{balance_message}}
+</div>
+
+<form  name="withdraw_form" ng-submit="withdraw_form.$valid && withdraw()" novalidate>
+
+	<h4>Saque</h4>
+
+	<input type="number"  ng-model="withdraw_value" placeholder="Valor" required >
+
+	<div ng-messages="withdraw_form.$submitted && withdraw_form.value.$error">
+		<div ng-message="required">O valor é requerido</div>
+	</div>
+
+	<button ng-disabled="loading" type="submit" value="">Sacar</button>
+
+	<div ng-if="withdraw_message">
+		{{withdraw_message}}
+	</div>
+				
+</form>
+
+<form  name="deposit_form" ng-submit="deposit_form.$valid && deposit()" novalidate>
+
+	<h4>Depósito</h4>
+
+	<input type="number"  ng-model="deposit_value" placeholder="Valor" required >
+
+	<div ng-messages="deposit_form.$submitted && deposit_form.value.$error">
+		<div ng-message="required">O valor é requerido</div>
+	</div>
+
+	<button ng-disabled="loading" type="submit" value="">Depositar</button>
+
+	<div ng-if="deposit_message">
+		{{deposit_message}}
+	</div>
+				
+</form>
+
+<form  name="transfer_form" ng-submit="transfer_form.$valid && transfer()" novalidate>
+
+	<h4>Transferência</h4>
+
+	<input type="number"  ng-model="transfer_value" placeholder="Valor" required >
+
+	<div ng-messages="transfer_form.$submitted && transfer_form.value.$error">
+		<div ng-message="required">O valor é requerido</div>
+	</div>
+
+	<input type="text"  ng-model="transfer_receiver" placeholder="Conta" style="width:160px;" required>
+
+	<div ng-messages="transfer_form.$submitted && transfer_form.transfer_account.$error">
+		<div ng-message="required">O valor é requerido</div>
+	</div>
+
+	<button ng-disabled="loading" type="submit" value="">Transferir</button>
+
+	<div ng-if="transfer_message">
+		{{transfer_message}}
+	</div>
+				
+</form>
+
+<form  name="excerpt_form" ng-submit="excerpt_form.$valid && excerpt()" novalidate>
+
+	<h4>Extrato</h4>
+
+	<button ng-disabled="loading" type="submit" value="">Gerar extrato</button>
+
+	<div class="container" ng-if="excerpt_transactions">       
+	  <table class="table table-striped">
+	    <thead>
+	      <tr>
+	        <th>Tipo</th>
+	        <th>Valor</th>
+	        <th>Data</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="transaction in excerpt_transactions | orderBy:'-'">
+	        <td>{{transaction.type}}</td>
+	        <td ng-if="transaction.mode=='decrease'">({{transaction.value}})</td>
+	        <td ng-if="transaction.mode=='increase'">{{transaction.value}}</td>
+	        <td>{{transaction.time}}</td>
+	      </tr>
+
+	    </tbody>
+	  </table>
+	</div>
+
+	<div ng-if="excerpt_message">
+		{{excerpt_message}}
+	</div>
+				
+</form>
+
+<form  name="help_form" ng-submit="help()" novalidate>
+
+	<h4>Visita do gerente</h4>
+
+	<button ng-disabled="loading" type="submit" value="">Solicitar</button>
+
+	<div ng-if="help_message">
+		{{help_message}}
+	</div>
+				
+</form>
+
+<form  name="logout_form" ng-submit="logout()" novalidate>
+
+	<h4>Sair</h4>
+
+	<button type="submit" value="">logout</button>
+
+				
+</form>

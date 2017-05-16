@@ -16,6 +16,8 @@ class TransactionPublic (TransactionManager):
 
     def doTransfer (self):
         value = self.transaction.getValue()
+        if(value>1000):
+            raise Exception("O valor máximo para transferência é de RS1000,00")
         self.cashier.decrease(amount=value, can_owing=False)
         self.payTransferTax()
         self.cashier.save()

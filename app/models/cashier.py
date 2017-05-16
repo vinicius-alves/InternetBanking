@@ -18,9 +18,9 @@ class Cashier ():
 
     def increase (self, amount, max=2147483647):
         if(amount<=0):
-            raise NameError
+            raise Exception("Internal Error")
         elif(amount > max):
-            raise Exception("Not Allowed")
+            raise Exception("O valor da transferência não pode exceder R$"+str(max))
         balance = self.account.getBalance() 
         self.account.setBalance(balance+amount)
 
@@ -28,11 +28,11 @@ class Cashier ():
         if(amount<=0):
             raise NameError
         elif(amount > max):
-            raise Exception("Not Allowed")
+            raise Exception("O valor da transferência não pode exceder R$"+str(max))
 
         balance = self.account.getBalance() 
         if(not(can_owing) and (amount > balance)):
-            raise Exception("Not Allowed")
+            raise Exception("O valor da transferência não pode exceder R$"+str(balance))
 
         self.account.setBalance(balance-amount)
 
@@ -67,7 +67,7 @@ class Cashier ():
         minutes = (time_delta_difference.seconds//60)%60
 
         if(minutes<0):
-            raise NameError
+            raise Exception("Internal Error")
         
         return minutes
 

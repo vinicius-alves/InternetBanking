@@ -17,25 +17,25 @@ class TransactionManager ():
         self.cashier.setAccount(transaction.getAccount())
 
     def withdraw (self):
-        raise NotImplementedError
+        raise NotImplementedError("Abstract method")
 
     def deposit (self):
-        raise NotImplementedError
+        raise NotImplementedError("Abstract method")
 
     def doTransfer (self):
-        raise NotImplementedError
+        raise NotImplementedError("Abstract method")
 
     def receiveTransfer (self):
-        raise NotImplementedError
+        raise NotImplementedError("Abstract method")
 
     def payTransferTax (self):
-        raise NotImplementedError
+        raise NotImplementedError("Abstract method")
 
     def payExcerpt (self):
-        raise NotImplementedError
+        raise NotImplementedError("Abstract method")
 
     def payHelp (self):
-        raise NotImplementedError
+        raise NotImplementedError("Abstract method")
 
     def save (self):
         self.transaction.save()

@@ -9,12 +9,12 @@ class RequestManager ():
 
     def getHelpRequest (self):
         if (self.help_request==None):
-            raise NameError
+            raise Exception("Help_Request doesn't set")
         return self.help_request
 
     def getTransactionManager (self):
         if (self.transaction_manager==None):
-            raise NameError
+            raise Exception("TransactionManager doesn't set")
         return self.transaction_manager
 
     def setHelpRequest (self, help_request):

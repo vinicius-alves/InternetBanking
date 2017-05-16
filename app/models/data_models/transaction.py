@@ -4,7 +4,7 @@ from app.models.data_models import Account, Transaction_Type
 class Transaction (models.Model):
 
     id      = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
-    time    = models.DateField(auto_now_add=True)
+    time    = models.DateTimeField(auto_now_add=True)
     value   = models.IntegerField(default=0)
     type    = models.ForeignKey(Transaction_Type)
     account = models.ForeignKey(Account,on_delete=models.CASCADE)
@@ -46,7 +46,7 @@ class Transaction (models.Model):
 
         json_dict = {}
         json_dict["id"]    = self.id
-        json_dict["time"]  = self.time.isoformat()
+        json_dict["time"]  = self.time.strftime("%d/%m/%Y %H:%M:%S")
         json_dict["value"] = self.value
         json_dict["type"]  = self.type.name
 

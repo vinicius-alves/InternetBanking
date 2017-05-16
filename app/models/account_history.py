@@ -12,12 +12,12 @@ class AccountHistory ():
 
     def getAccount (self):
         if (self.account==None):
-            raise NameError
+            raise Exception("Account doesn't set")
         return self.account
 
     def getTransactionManager (self):
         if (self.transaction_manager==None):
-            raise NameError
+            raise Exception("TransactionManager doesn't set")
         return self.transaction_manager
 
     def setAccount (self, account):
