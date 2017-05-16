@@ -56,7 +56,6 @@ Todas as outras dependências e bibliotecas externas já estão acopladas nesse 
 - Utillizando o terminal, navegue até o diretório que você extraiu o repositório e digite o seguinte comando:
 ```
 source env/bin/activate
-
 ```
 
 ### Inicializando o servidor

@@ -93,8 +93,8 @@ def withdraw(request):
     try:
         json_in=json.loads(request.body.decode("utf-8"))
         account = Account.objects.get(user=request.user)
-        type = Transaction_Type.objects.get(id=1)  
-        transaction.setType(type)
+        type_transaction = Transaction_Type.objects.get(id=1)  
+        transaction.setType(type_transaction)
         transaction.setValue(abs(int(json_in["value"])))
         transaction.setAccount(account)
 
@@ -131,8 +131,8 @@ def deposit(request):
     try:
         json_in=json.loads(request.body.decode("utf-8"))
         account = Account.objects.get(user=request.user)
-        type = Transaction_Type.objects.get(id=2)  
-        transaction.setType(type)
+        type_transaction = Transaction_Type.objects.get(id=2)  
+        transaction.setType(type_transaction)
         transaction.setValue(abs(int(json_in["value"])))
         transaction.setAccount(account)
 
@@ -176,8 +176,8 @@ def transfer(request):
         receiver_account = Account.objects.get(user=receiver)
 
         #first transaction
-        type = Transaction_Type.objects.get(id=5)  
-        first_transaction.setType(type)
+        type_transaction = Transaction_Type.objects.get(id=5)  
+        first_transaction.setType(type_transaction)
         first_transaction.setValue(abs(int(json_in["value"])))
         first_transaction.setAccount(account)
 
@@ -192,8 +192,8 @@ def transfer(request):
         transaction_manager.save()
 
         #second transaction
-        type = Transaction_Type.objects.get(id=8)  
-        second_transaction.setType(type)
+        type_transaction = Transaction_Type.objects.get(id=8)  
+        second_transaction.setType(type_transaction)
         second_transaction.setValue(abs(int(json_in["value"])))
         second_transaction.setAccount(receiver_account)
 
@@ -206,8 +206,6 @@ def transfer(request):
         transaction_manager.setTransaction(second_transaction)
         transaction_manager.receiveTransfer()   
         transaction_manager.save()
-
-        raise NotImplementedError 
 
         data = {"status":"sucesso"}
         return Response(data,status=status.HTTP_200_OK) 
@@ -223,30 +221,29 @@ def transfer(request):
 @permission_classes((VipOnly,))
 def help(request):
     data ={}
-    transaction = Transaction()
-    transaction_manager = TransactionManager()
+    transaction =Transaction()
+    transaction_manager = TransactionManager()    
     request_manager = RequestManager()
     if settings.DEBUG:
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
         print ("{\"user:\"\"",str(request.user),"\"}")
     try:
+
+        help_request = Help_Request()
+        help_request.setUser(request.user)
+        request_manager.setHelpRequest(help_request)
+
         account = Account.objects.get(user=request.user)
-        type = Transaction_Type.objects.get(id=7)  
-        transaction.setType(type)
+        type_transaction = Transaction_Type.objects.get(id=7)  
+        transaction.setType(type_transaction)
+        transaction.setValue(50)
         transaction.setAccount(account)
 
-        if(groups_manager.isPublic(request.user)):
-            transaction_manager = TransactionPublic()
+        transaction_manager = TransactionVip()  
+        transaction_manager.setTransaction(transaction)        
+        request_manager.setTransactionManager(transaction_manager) 
 
-        elif(groups_manager.isVip(request.user)):
-            transaction_manager = TransactionVip() 
-
-        transaction_manager.setTransaction(transaction)            
-        request_manager.setTransactionManager(transaction_manager)    
-        transaction_manager.payHelp()   
-        transaction_manager.save()
-        
-        raise NotImplementedError 
+        request_manager.save()
 
         data = {"status":"sucesso"}
         return Response(data,status=status.HTTP_200_OK) 

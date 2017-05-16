@@ -50,6 +50,14 @@ class Transaction (models.Model):
         json_dict["value"] = self.value
         json_dict["type"]  = self.type.name
 
+        deposito = Transaction_Type.objects.get(id=2)
+        recebimento_transferencia = Transaction_Type.objects.get(id=8)
+
+        if(self.type == deposito or self.type == recebimento_transferencia):
+            json_dict["mode"]  = "increase"
+        else:
+            json_dict["mode"]  = "decrease"
+
         return json_dict
 
     def __str__(self):

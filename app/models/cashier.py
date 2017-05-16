@@ -24,12 +24,16 @@ class Cashier ():
         balance = self.account.getBalance() 
         self.account.setBalance(balance+amount)
 
-    def decrease (self, amount, max=2147483647):
+    def decrease (self, amount, max=2147483647, can_owing=True):
         if(amount<=0):
             raise NameError
         elif(amount > max):
             raise Exception("Not Allowed")
+
         balance = self.account.getBalance() 
+        if(not(can_owing) and (amount > balance)):
+            raise Exception("Not Allowed")
+
         self.account.setBalance(balance-amount)
 
     def save(self):

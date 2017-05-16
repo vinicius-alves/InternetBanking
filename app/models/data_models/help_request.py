@@ -5,14 +5,11 @@ class Help_Request (models.Model):
 
     id     = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
     solved = models.BooleanField(default=False)
-    start  = models.DateField(auto_now_add=True)
-    user   = models.OneToOneField(User,on_delete=models.CASCADE)
+    start  = models.DateTimeField(auto_now_add=True)
+    user   = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def getId (self):
         return self.id
-
-    def getType (self):
-        return self.type
 
     def getSolved (self):
         return self.solved
@@ -25,9 +22,6 @@ class Help_Request (models.Model):
 
     def setId (self,id):
         self.id = id
-
-    def setType (self,type):
-        self.type = type 
 
     def setValue (self,solved):
         self.solved = solved   
@@ -43,7 +37,7 @@ class Help_Request (models.Model):
 
     def __str__(self):
 
-        return str(self.account.id) + ' - '+ self.time.user.username+ ' - '+ str(self.start)
+        return str(self.id) + ' - '+ self.user.username+ ' - '+ str(self.start)
 
     class Meta:
         db_table = 'Help_Request'

@@ -57,7 +57,7 @@ class TransactionVip (TransactionManager):
         self.check_if_did_debits()        
         value = self.transaction.getValue()
         self.cashier.decrease(amount=value)
-        raise NotImplementedError 
+        self.payTransferTax()
         self.cashier.save()
 
     def receiveTransfer (self):
@@ -66,6 +66,16 @@ class TransactionVip (TransactionManager):
         value = self.transaction.getValue()
         self.cashier.increase(amount=value)
         self.cashier.save()
+
+    def payTransferTax (self):
+        tax_transaction = Transaction()
+        type_transaction = Transaction_Type.objects.get(id=6)  
+        tax_transaction.setType(type_transaction)
+        tax = self.transaction.getValue()*0.08
+        tax_transaction.setValue(tax)
+        self.cashier.decrease(amount=tax)
+        tax_transaction.setAccount(self.transaction.getAccount())
+        tax_transaction.save()
 
     def payExcerpt (self):
         self.updateDebits()

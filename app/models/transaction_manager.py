@@ -28,6 +28,9 @@ class TransactionManager ():
     def receiveTransfer (self):
         raise NotImplementedError
 
+    def payTransferTax (self):
+        raise NotImplementedError
+
     def payExcerpt (self):
         raise NotImplementedError
 

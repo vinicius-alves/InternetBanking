@@ -1,5 +1,5 @@
 from django.db import models
-from app.models.data_models import Help_Request, Transaction, Transaction_Type
+from app.models.data_models import Help_Request
 from app.models import TransactionManager
 
 class RequestManager ():
@@ -24,14 +24,9 @@ class RequestManager ():
         self.transaction_manager = transaction_manager
 
     def save (self):
-        transaction = Transaction()
-        transaction_manager = TransactionManager()
-        type = Transaction_Type.objects.get(id=7)  
-        transaction.setType(type)
-        transaction.setAccount(account)
-        transaction_manager.setTransaction(transaction) 
-
-        raise NotImplementedError
+        self.getHelpRequest().save() 
+        self.getTransactionManager().payHelp()
+        self.getTransactionManager().save()  
 
     class Meta:
         managed   = False
