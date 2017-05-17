@@ -1,8 +1,12 @@
 from django.db import models
 
-#primary keys
-
 class SettingsUserGroups(models.Model):
+    """
+    Classe auxiliar, apenas verifica se o usuário pertence a um grupo chamado
+    público ou a um grupo chamado vip. Para isso tem membros de dados internos
+    representando as chaves primárias de ambos os grupos.
+    """
+
     PublicGroup = 1
     VipGroup = 2
 

@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 
 class Account (models.Model):
 
+    """
+    Classe de dados do tipo conta de usuário. Possui os campos de balance (saldo),
+    owing_since(opcional), que representa se e desde quando o usuário é devedor e uma chave
+    para o usuário correspondente.
+    """
+
     id          = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
     balance     = models.FloatField(default=0)
     owing_since = models.DateTimeField(null=True, blank=True)
@@ -15,6 +21,9 @@ class Account (models.Model):
         return self.balance
 
     def getOwing (self):
+        '''
+        Verifica se o usuário é devedor através do saldo em conta.
+        '''
         owing = self.balance<0
         return owing
 

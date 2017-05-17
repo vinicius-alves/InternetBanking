@@ -14,14 +14,32 @@ from app.permissions import AllowAll,VipOnly
 #static pages
 
 def index(request):
+    """
+    Retorna a webpage da aplicação.
+    """
     return render(request, 'app/index.html', {})
 
 #web services
+
+"""
+Todas as requisições descritas abaixo REST seguem o padrão try-except, em que se tenta realizar
+alguma operação e se por algum acaso uma exceção for gerada, ela será enviada em formato legível
+por json. 
+O primeiro trecho de código sucedido por "setting.DEBUG" imprime a função solicitada e o usuário 
+que a solicitou, e o segundo trecho do mesmo tipo representa o json enviado na saída.
+Essas informações são só impressas no terminal se, a aplicação estiver no modo DEBUG.
+Todas as requisições que envolvem cobranças, criam inicialmente um objeto de classe base do tipo
+TransactionManager e quando chega o ponto de pagamento, é feito upcast deste, que se torna um 
+TransactionPublic ou TransactionVip, conforme o tipo de usuário.
+"""
 
 @api_view(['POST','DELETE'])
 @authentication_classes((TokenAuthentication,))
 @permission_classes((AllowAll,))
 def logout(request):
+    """
+    Apenas requisita o que o token do usuário seja renovado.
+    """
     data ={}
     if settings.DEBUG:
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
@@ -42,6 +60,9 @@ def logout(request):
 @authentication_classes((TokenAuthentication,))
 @permission_classes((AllowAll,))
 def balance(request):
+    """
+    Retorna o valor de saldo da conta do usuário.
+    """
     data ={}
     if settings.DEBUG:
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
@@ -60,6 +81,9 @@ def balance(request):
 @authentication_classes((TokenAuthentication,))
 @permission_classes((AllowAll,))
 def excerpt(request):
+    """
+    Retorna uma lista com todas as transações da conta do usuário.
+    """
     data ={}
     if settings.DEBUG:
         print ("Input: {\"function\":\"",str(sys._getframe().f_code.co_name),"} ",end="")
@@ -81,6 +105,10 @@ def excerpt(request):
 @authentication_classes((TokenAuthentication,))
 @permission_classes((AllowAll,))
 def withdraw(request):
+    """
+    Recebe um parâmetro via json representando o valor a ser sacado. Em seguida, tenta
+    executar o saque, caso não hajam complicações, retorna uma mensagem de sucesso.
+    """
     data ={}
     groups_manager = SettingsUserGroups()
     transaction = Transaction()
@@ -119,6 +147,10 @@ def withdraw(request):
 @authentication_classes((TokenAuthentication,))
 @permission_classes((AllowAll,))
 def deposit(request):
+    """
+    Recebe um parâmetro via json representando o valor a ser depositado. Em seguida, 
+    realiza o depósito na conta do usuário.
+    """
     data ={}
     groups_manager = SettingsUserGroups()
     transaction = Transaction()
@@ -157,6 +189,11 @@ def deposit(request):
 @authentication_classes((TokenAuthentication,))
 @permission_classes((AllowAll,))
 def transfer(request):
+    """
+    Recebe por json um parâmetro de valor e um de conta, para a qual o valor deve ser 
+    transferido. Em seguida realiza e salva duas transações nas contas relacionadas uma do tipo
+    "Transferência bancária" e outra do tipo "Recebimento de transferência bancária"
+    """
     data ={}
     groups_manager = SettingsUserGroups()
     first_transaction = Transaction()
@@ -218,6 +255,10 @@ def transfer(request):
 @authentication_classes((TokenAuthentication,))
 @permission_classes((VipOnly,))
 def help(request):
+    """
+    Registra uma requisição de ajuda para um usuário do tipo Vip.
+    Usuários que não sejam deste grupo não tem acesso à requisição.
+    """
     data ={}
     transaction =Transaction()
     transaction_manager = TransactionManager()    

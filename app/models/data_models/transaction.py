@@ -3,6 +3,12 @@ from app.models.data_models import Account, Transaction_Type
 
 class Transaction (models.Model):
 
+    """
+    Classe de dados do tipo transação de conta. Possui os campos de value (valor),
+    time, que representa o momento em que foi realizada a transação, uma chave que indica
+    o tipo de transação, e outra chave para a conta correspondente.
+    """
+
     id      = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
     time    = models.DateTimeField(auto_now_add=True)
     value   = models.FloatField(default=0)

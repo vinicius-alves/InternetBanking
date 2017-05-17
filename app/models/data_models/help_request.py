@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 
 class Help_Request (models.Model):
 
+    """
+    Classe de dados do tipo requisição de ajuda. Possui os campos de solved, que representa
+    se o caso já foi resolvido, start, que representa o momento em que o usuário requisitou ajuda 
+    e uma chave para o usuário correspondente.
+    """
+
     id     = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
     solved = models.BooleanField(default=False)
     start  = models.DateTimeField(auto_now_add=True)

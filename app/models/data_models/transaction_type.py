@@ -2,6 +2,11 @@ from django.db import models
 
 class Transaction_Type(models.Model):
 
+    """
+    Classe de dados que representa os tipos de transação de conta. 
+    Possui apenas o campo name (nome), e é limitada a algumas opções pré-estabelecidas.
+    """
+
     id = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
     
     # Transaction Types:
