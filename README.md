@@ -48,7 +48,7 @@ As seguintes tecnologias são necessárias para o bom funcionamento do sistema:
 
 - Python 3
 
-Todas as outras dependências e bibliotecas externas já estão acopladas nesse repositório e não necessitam de maior atenção do usuário. O sistema de base de dados utilizado foi o `sqlite3` fornecido pelo próprio Django.
+Todas as outras dependências e bibliotecas externas já estão acopladas nesse repositório e não necessitam de maior atenção do usuário. O sistema de banco de dados utilizado foi o `sqlite3` fornecido pelo próprio Django.
 
 ### Inicializando o ambiente
 
@@ -67,3 +67,16 @@ python3 manage.py runserver
 ```
 
 - Acesse a aplicação em `http://127.0.0.1:8000/` ou `localhost:8000/` 
+
+### Contas Cadastradas
+
+Para testes iniciais, algumas contas já estão cadastradas no sistema, e todas não possuem transações associadas.
+O Django não permite cadastro de contas com senhas de quatro dígitos, então foram utilizados 8 dígitos de senha.
+
+| Conta | Senha    | Saldo | Tipo   |
+| ----- | -------- | ----- | ------ |
+| 54103 | 0rL9uVDM | 5000  | Normal |
+| 36780 | 2OiNYwy8 | 73,2  | Normal |
+| 72154 | 1DGoNNAf |  610  |  Vip   |
+| 10284 | 9exGhMW7 | 12,3  |  Vip   |
+
