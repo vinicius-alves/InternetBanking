@@ -20,7 +20,7 @@ class Cashier ():
         if(amount<=0):
             raise Exception("Internal Error")
         elif(amount > max):
-            raise Exception("O valor da transferência não pode exceder R$"+str(max))
+            raise Exception("O valor da transação não pode exceder R$"+str(max))
         balance = self.account.getBalance() 
         self.account.setBalance(balance+amount)
 
@@ -28,11 +28,11 @@ class Cashier ():
         if(amount<=0):
             raise NameError
         elif(amount > max):
-            raise Exception("O valor da transferência não pode exceder R$"+str(max))
+            raise Exception("O valor da transação não pode exceder R$"+str(max))
 
         balance = self.account.getBalance() 
         if(not(can_owing) and (amount > balance)):
-            raise Exception("O valor da transferência não pode exceder R$"+str(balance))
+            raise Exception("O valor da transação não pode exceder R$"+str(balance))
 
         self.account.setBalance(balance-amount)
 
@@ -52,7 +52,7 @@ class Cashier ():
         balance = self.account.getBalance()
         interest_rate = pow(1.001,minutes_owing) 
         debits = abs(balance)*(interest_rate-1)
-        self.decrease(debits)  
+        self.decrease(debits) 
         
         return debits
 

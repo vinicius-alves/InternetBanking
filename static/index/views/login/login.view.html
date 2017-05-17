@@ -1,28 +1,53 @@
 <style>
 
+.login_input{
+	margin:0px auto;
+	width: 300px;
+}
+
+.login_submit{
+	margin:10px auto;
+	width: 200px;
+	text-align: center;
+}
+
+#login_wrapper{
+	padding:40px;
+	margin: 200px auto;
+}
+
+#logout_field{
+	display:none;
+}
+
 
 </style>
 
+<div id="login_wrapper">
 
-<form name="form" ng-submit="form.$valid && login()" novalidate>
+	<h3>Realize login para continuar</h3>
 
-	<input type="text" id="account" name="account" class="input-field" ng-model="account" placeholder="Login" required />
-	<div ng-messages="form.$submitted && form.account.$error">
-	    <div ng-message="required">A conta é requerida</div>
-	</div>
+	<form name="form" ng-submit="form.$valid && login()" novalidate>
 
-	<input type="password" id="password" name="password"  ng-model="password" placeholder="Password" required >
-	</br>
-	<button  ng-disabled="loading" type="submit" class="submit-field"  value="Login">Login</button>
+		<input class="login_input" type="text" id="account" name="account" class="input-field" ng-model="account" placeholder="Login" required />
+		<div ng-messages="form.$submitted && form.account.$error">
+		    <div ng-message="required">A conta é requerida</div>
+		</div>
 
-	<div ng-messages="form.$submitted && form.password.$error">
-		<div ng-message="required">A senha é requerida</div>
-	</div>
+		<input class="login_input" type="password" id="password" name="password"  ng-model="password" placeholder="Password" required >
+		</br>
+		<button  ng-disabled="loading" type="submit" class="login_submit"  value="Login">Login</button>
 
-	<div ng-if="error" class="error-field">
+		<div ng-messages="form.$submitted && form.password.$error">
+			<div ng-message="required">A senha é requerida</div>
+		</div>
 
-		<span>{{error}}</span>
-	</div>
+		<div ng-if="error" class="error-field">
 
-				
-</form>
+			<span>{{error}}</span>
+		</div>
+
+					
+	</form>
+
+<div>

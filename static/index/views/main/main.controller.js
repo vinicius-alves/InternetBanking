@@ -101,6 +101,7 @@ function Controller($scope, $http, prefix, $location, AuthenticationService){
             $scope.excerpt_message = "";
             $scope.loading = false;
             $scope.excerpt_transactions = response.data.transactions;
+            $scope.excerpt_button="hidden";
             
         }, function (response){
             
@@ -117,15 +118,16 @@ function Controller($scope, $http, prefix, $location, AuthenticationService){
 		$http.post(prefix + '/help/')
         .then(function (response) {
 
+          $scope.help_button="hidden";
         	updateBalance();
             if($scope.asked_excerpt) $scope.excerpt();
             $scope.help_message = "Requerimento enviado!";
             $scope.loading = false;
             
         }, function (response){
-            
-           $scope.help_message = response.data.detail;
-           $scope.loading = false;
+            $scope.help_button="hidden";
+            $scope.help_message = response.data.detail;
+            $scope.loading = false;
         });
 	};
 

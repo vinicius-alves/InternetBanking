@@ -5,7 +5,7 @@ class Transaction (models.Model):
 
     id      = models.AutoField(auto_created=True, primary_key=True, verbose_name='ID')
     time    = models.DateTimeField(auto_now_add=True)
-    value   = models.IntegerField(default=0)
+    value   = models.FloatField(default=0)
     type    = models.ForeignKey(Transaction_Type)
     account = models.ForeignKey(Account,on_delete=models.CASCADE)
 

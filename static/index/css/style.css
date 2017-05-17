@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+body{
+	background-image: url(../imgs/amazing-2178625_1920.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+#app-wrapper{
+
+	background-color: white;
+	padding:40px;
+  	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	margin: auto;
+}
+
+#navbar{
+	z-index:1;
+}

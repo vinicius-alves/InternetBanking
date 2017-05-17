@@ -1,121 +1,215 @@
-<h3>Bem-vindo!<h3>
+<style>
+	
+	.features_wrapper{
+		width: 300px;
+		height: 220px;
+		padding: 30px;
+		background-color: rgb(35,35,142);
+		display: block;
+		float: left;
+		margin:20px;
+		text-align: center;
+	}
 
-<h4>Saldo - R$ {{balance}}</h4>
+	.feature_excerpt{
+		width: auto;
+		height: 220px;
+		min-width: 300px;
+		max-width: 642px;
+		
+	}
+
+	.feature_title{
+		font-size:20pt;
+		color:white;
+	}
+
+	.feature_message{
+		color:white;
+		overflow:auto;
+	}
+
+	.excerpt_table{
+		max-width: 100%;
+		max-height: 120px;
+		overflow:auto;
+		background-color: white;
+	}
+
+	.feature_input{
+		width:80%;
+	}
+
+	.feature_button{
+		margin:10px auto;
+	}
+
+	.hidden{
+		display:none;
+	}
+
+	#transfer_account{
+		width:190px;
+	}
+
+	#wrapper_welcome{
+		height: 80px;
+	}
+
+
+	#welcome_field{
+		display: block;
+		float:left;		
+	}
+
+	#balance_field{
+		display: block;
+		float:right;
+		margin-left:40px;
+		height:70px;
+		margin-bottom: 0px;
+		padding:0px;
+		padding-right: 10px;
+		padding-left: 10px;
+	}
+
+</style>
+
+<div id="wrapper_welcome">
+	<div id="welcome_field">
+		<h2>Bem-vindo!<h2>
+	</div>
+
+	<div id="balance_field" class="alert alert-info">
+		<h2>Saldo - R$ {{balance.toFixed(2)}}</h2>
+	</div>
+</div>
 
 <div ng-if="balance_message">
 	{{balance_message}}
 </div>
 
-<form  name="withdraw_form" ng-submit="withdraw_form.$valid && withdraw()" novalidate>
+<div class="features_wrapper">
 
-	<h4>Saque</h4>
+	<form  name="withdraw_form" ng-submit="withdraw_form.$valid && withdraw()" novalidate>
 
-	<input type="number"  ng-model="withdraw_value" placeholder="Valor" required >
+		<h4 class="feature_title">Saque</h4>
 
-	<div ng-messages="withdraw_form.$submitted && withdraw_form.value.$error">
-		<div ng-message="required">O valor é requerido</div>
-	</div>
+		<input type="number" class="feature_input" ng-model="withdraw_value" placeholder="Valor" required >
 
-	<button ng-disabled="loading" type="submit" value="">Sacar</button>
+		<div ng-messages="withdraw_form.$submitted && withdraw_form.value.$error">
+			<div ng-message="required">O valor é requerido</div>
+		</div>
 
-	<div ng-if="withdraw_message">
-		{{withdraw_message}}
-	</div>
-				
-</form>
+		<button ng-disabled="loading" class="feature_button" type="submit" value="">Sacar</button>
 
-<form  name="deposit_form" ng-submit="deposit_form.$valid && deposit()" novalidate>
+		<div class="feature_message" ng-if="withdraw_message">
+			{{withdraw_message}}
+		</div>
+					
+	</form>
 
-	<h4>Depósito</h4>
+</div>
 
-	<input type="number"  ng-model="deposit_value" placeholder="Valor" required >
+<div class="features_wrapper">
 
-	<div ng-messages="deposit_form.$submitted && deposit_form.value.$error">
-		<div ng-message="required">O valor é requerido</div>
-	</div>
+	<form  name="deposit_form" ng-submit="deposit_form.$valid && deposit()" novalidate>
 
-	<button ng-disabled="loading" type="submit" value="">Depositar</button>
+		<h4 class="feature_title">Depósito</h4>
 
-	<div ng-if="deposit_message">
-		{{deposit_message}}
-	</div>
-				
-</form>
+		<input type="number" class="feature_input" ng-model="deposit_value" placeholder="Valor" required >
 
-<form  name="transfer_form" ng-submit="transfer_form.$valid && transfer()" novalidate>
+		<div ng-messages="deposit_form.$submitted && deposit_form.value.$error">
+			<div ng-message="required">O valor é requerido</div>
+		</div>
 
-	<h4>Transferência</h4>
+		<button ng-disabled="loading" class="feature_button" type="submit" value="">Depositar</button>
 
-	<input type="number"  ng-model="transfer_value" placeholder="Valor" required >
+		<div class="feature_message" ng-if="deposit_message">
+			{{deposit_message}}
+		</div>
+					
+	</form>
 
-	<div ng-messages="transfer_form.$submitted && transfer_form.value.$error">
-		<div ng-message="required">O valor é requerido</div>
-	</div>
+</div>
 
-	<input type="text"  ng-model="transfer_receiver" placeholder="Conta" style="width:160px;" required>
+<div class="features_wrapper">
 
-	<div ng-messages="transfer_form.$submitted && transfer_form.transfer_account.$error">
-		<div ng-message="required">O valor é requerido</div>
-	</div>
+	<form  name="transfer_form" ng-submit="transfer_form.$valid && transfer()" novalidate>
 
-	<button ng-disabled="loading" type="submit" value="">Transferir</button>
+		<h4 class="feature_title">Transferência</h4>
 
-	<div ng-if="transfer_message">
-		{{transfer_message}}
-	</div>
-				
-</form>
+		<input type="number" class="feature_input" ng-model="transfer_value" placeholder="Valor" required >
 
-<form  name="excerpt_form" ng-submit="excerpt_form.$valid && excerpt()" novalidate>
+		<div ng-messages="transfer_form.$submitted && transfer_form.value.$error">
+			<div ng-message="required">O valor é requerido</div>
+		</div>
 
-	<h4>Extrato</h4>
+		<input type="text" id="transfer_account"  ng-model="transfer_receiver" placeholder="Conta" required>
 
-	<button ng-disabled="loading" type="submit" value="">Gerar extrato</button>
+		<div ng-messages="transfer_form.$submitted && transfer_form.transfer_account.$error">
+			<div ng-message="required">O valor é requerido</div>
+		</div>
 
-	<div class="container" ng-if="excerpt_transactions">       
-	  <table class="table table-striped">
-	    <thead>
-	      <tr>
-	        <th>Tipo</th>
-	        <th>Valor</th>
-	        <th>Data</th>
-	      </tr>
-	    </thead>
-	    <tbody>
-	      <tr ng-repeat="transaction in excerpt_transactions | orderBy:'-'">
-	        <td>{{transaction.type}}</td>
-	        <td ng-if="transaction.mode=='decrease'">({{transaction.value}})</td>
-	        <td ng-if="transaction.mode=='increase'">{{transaction.value}}</td>
-	        <td>{{transaction.time}}</td>
-	      </tr>
+		<button ng-disabled="loading" class="feature_button" type="submit" value="">Transferir</button>
 
-	    </tbody>
-	  </table>
-	</div>
+		<div class="feature_message" ng-if="transfer_message">
+			{{transfer_message}}
+		</div>
+					
+	</form>
 
-	<div ng-if="excerpt_message">
-		{{excerpt_message}}
-	</div>
-				
-</form>
+</div>
 
-<form  name="help_form" ng-submit="help()" novalidate>
+<div class="features_wrapper">
 
-	<h4>Visita do gerente</h4>
+	<form  name="help_form" ng-submit="help()" novalidate>
 
-	<button ng-disabled="loading" type="submit" value="">Solicitar</button>
+		<h4 class="feature_title">Visita do gerente</h4>
 
-	<div ng-if="help_message">
-		{{help_message}}
-	</div>
-				
-</form>
+		<button ng-disabled="loading" class="feature_button" ng-class="help_button" type="submit" value="">Solicitar</button>
 
-<form  name="logout_form" ng-submit="logout()" novalidate>
+		<div class="feature_message" ng-if="help_message">
+			{{help_message}}
+		</div>
+					
+	</form>
 
-	<h4>Sair</h4>
+</div>
 
-	<button type="submit" value="">logout</button>
+<div class="features_wrapper feature_excerpt">
 
-				
-</form>
+	<form  name="excerpt_form" ng-submit="excerpt_form.$valid && excerpt()" novalidate>
+
+		<h4 class="feature_title">Extrato</h4>
+
+		<button ng-disabled="loading" class="feature_button" ng-class="excerpt_button" type="submit" value="">Gerar extrato</button>
+
+		<div class="container excerpt_table" ng-if="excerpt_transactions">       
+		  <table class="table table-striped">
+		    <thead>
+		      <tr>
+		        <th>Tipo</th>
+		        <th>Valor (R$)</th>
+		        <th>Data</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="transaction in excerpt_transactions | orderBy:'-'">
+		        <td>{{transaction.type}}</td>
+		        <td ng-if="transaction.mode=='decrease'">({{transaction.value.toFixed(2)}})</td>
+		        <td ng-if="transaction.mode=='increase'">{{transaction.value.toFixed(2)}}</td>
+		        <td>{{transaction.time}}</td>
+		      </tr>
+
+		    </tbody>
+		  </table>
+		</div>
+
+		<div class="feature_message" ng-if="excerpt_message">
+			{{excerpt_message}}
+		</div>
+					
+	</form>
+
+</div>
