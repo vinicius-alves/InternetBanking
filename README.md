@@ -44,6 +44,8 @@ Deve ser possível sair da conta de usuário e entrar em outro para verificar as
 
 ## Como utilizar
 
+Por conflitos de caracteres ou de traduções, o sistema não funciona adequadamente em alguns sistemas, principalmente no windows.
+Procure realizar sua implementação em um ambiente linux, preferencialmente no Ubuntu.
 As seguintes tecnologias são necessárias para o bom funcionamento do sistema:
 
 - Python 3
