@@ -204,7 +204,7 @@ def transfer(request):
         print ("{\"user:\"\"",str(request.user),"\"}")
     try:
         json_in=json.loads(request.body.decode("utf-8"))
-        receiver = User.objects.get(id=json_in["receiver"])
+        receiver = User.objects.get(username=json_in["receiver"])
         if(request.user==receiver):
             raise Exception("Não é permitido fazer uma transferência para a própria conta")
         account = Account.objects.get(user=request.user)
