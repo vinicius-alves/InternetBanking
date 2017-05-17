@@ -121,7 +121,7 @@ def withdraw(request):
         account = Account.objects.get(user=request.user)
         type_transaction = Transaction_Type.objects.get(id=1)  
         transaction.setType(type_transaction)
-        transaction.setValue(abs(int(json_in["value"])))
+        transaction.setValue(abs(float(json_in["value"])))
         transaction.setAccount(account)
 
         if(groups_manager.isPublic(request.user)):
@@ -163,7 +163,7 @@ def deposit(request):
         account = Account.objects.get(user=request.user)
         type_transaction = Transaction_Type.objects.get(id=2)  
         transaction.setType(type_transaction)
-        transaction.setValue(abs(int(json_in["value"])))
+        transaction.setValue(abs(float(json_in["value"])))
         transaction.setAccount(account)
 
         if(groups_manager.isPublic(request.user)):
@@ -213,7 +213,7 @@ def transfer(request):
         #first transaction
         type_transaction = Transaction_Type.objects.get(id=5)  
         first_transaction.setType(type_transaction)
-        first_transaction.setValue(abs(int(json_in["value"])))
+        first_transaction.setValue(abs(float(json_in["value"])))
         first_transaction.setAccount(account)
 
         if(groups_manager.isPublic(request.user)):
@@ -229,7 +229,7 @@ def transfer(request):
         #second transaction
         type_transaction = Transaction_Type.objects.get(id=8)  
         second_transaction.setType(type_transaction)
-        second_transaction.setValue(abs(int(json_in["value"])))
+        second_transaction.setValue(abs(float(json_in["value"])))
         second_transaction.setAccount(receiver_account)
 
         if(groups_manager.isPublic(receiver)):

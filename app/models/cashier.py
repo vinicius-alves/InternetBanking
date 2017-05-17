@@ -53,7 +53,7 @@ class Cashier ():
         tenta sacar além do permitido, representado pelo argumento "can_owing".
         """
         if(amount<=0):
-            raise NameError
+            raise Exception("O valor da transação deve ser maior que zero.")
         elif(amount > max):
             raise Exception("O valor da transação não pode exceder R$"+str(max))
 
